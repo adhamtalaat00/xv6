@@ -9,9 +9,9 @@
 #define AUDIT_MAX_ENTRIES  128   // Max number of log entries
 
 // Trap number to readable name mapping
-#define T_SYSCALL 64
+#define T_SYSCALL 63
 
-#define TRAPNAMES_LEN 65
+#define TRAPNAMES_LEN 64
 extern const char *trapnames[TRAPNAMES_LEN];
 
 // Syscall audit log entry

@@ -17,14 +17,11 @@ int passed_tests = 0;
 int failed_tests = 0;
 
 void print_test_header(void) {
-  printf("DEBUG: Starting print_test_header\n");
-  fflush(stdout);
   printf("\n");
   printf("====================================================================\n");
   printf("        xv6 KERNEL SECURITY - COMPREHENSIVE TEST SUITE\n");
   printf("====================================================================\n");
   printf("\n");
-  fflush(stdout);
 }
 
 void print_section(const char *section_name) {
@@ -45,16 +42,10 @@ void test_result(int result, const char *test_name) {
 // ============== PHASE 1 TESTS - User Authentication ==============
 
 void test_phase1_authentication(void) {
-  printf("DEBUG: Starting test_phase1_authentication\n");
-  fflush(stdout);
   print_section("PHASE 1: USER AUTHENTICATION");
-  printf("DEBUG: About to call init_user_table\n");
-  fflush(stdout);
   
   // Test 1: Initialize user table
   init_user_table();
-  printf("DEBUG: init_user_table called\n");
-  fflush(stdout);
   test_result(1, "Initialize user table");
   
   // Test 2: Add new user
@@ -108,45 +99,25 @@ void test_phase1_authentication(void) {
   test_result(del_result < 0, "Prevent deletion of root user");
   
   // Test 14: Add multiple users
-  printf("DEBUG: About to add user1\n");
-  fflush(stdout);
   uid_t uid1 = add_user("user1", "pass1");
-  printf("DEBUG: uid1 = %d\n", uid1);
-  fflush(stdout);
   uid_t uid2 = add_user("user2", "pass2");
-  printf("DEBUG: uid2 = %d\n", uid2);
-  fflush(stdout);
   test_result(uid1 > 0 && uid2 > 0 && uid1 != uid2, "Add multiple users with unique UIDs");
-  printf("DEBUG: Phase 1 complete, about to enter Phase 2\n");
-  fflush(stdout);
 }
 
 // ============== PHASE 2 TESTS - File Permissions ==============
 
 void test_phase2_permissions(void) {
-  printf("DEBUG: Starting test_phase2_permissions\n");
-  fflush(stdout);
   print_section("PHASE 2: FILE PERMISSIONS");
-  printf("DEBUG: print_section done\n");
-  fflush(stdout);
   
   // Create test inode structures
   struct dinode test_file;
-  printf("DEBUG: Creating test_file dinode\n");
-  fflush(stdout);
   test_file.mode = 0644;  // rw-r--r--
   test_file.uid = 1000;   // user1
   test_file.gid = 1000;
   
   // Test 1: Owner can read own file
-  printf("DEBUG: About to check permission for owner read\n");
-  fflush(stdout);
   int perm = check_permission(&test_file, PERM_READ, 1000, 1000);
-  printf("DEBUG: check_permission returned %d\n", perm);
-  fflush(stdout);
   test_result(perm == 1, "Owner can read own file");
-  printf("DEBUG: test_result call done\n");
-  fflush(stdout);
   
   // Test 2: Owner can write own file
   perm = check_permission(&test_file, PERM_WRITE, 1000, 1000);

@@ -77,7 +77,7 @@ const char *trapnames[] = {
 };
 
 const char* get_trapname(int trapno) {
-  if (trapno >= 0 && trapno < 65) {
+  if (trapno >= 0 && trapno < 64) {
     return trapnames[trapno];
   }
   return "UNKNOWN";

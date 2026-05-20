@@ -39,19 +39,13 @@ int verify_password(char *password, char *stored_hash) {
 }
 
 void init_user_table(void) {
-  printf("DEBUG: init_user_table - checking if initialized\n");
-  fflush(stdout);
   if (users_initialized) return;
   
-  printf("DEBUG: init_user_table - initializing\n");
-  fflush(stdout);
   users.num_users = 0;
   users_initialized = 1;
   
   // Initialize root user
   struct user_entry root;
-  printf("DEBUG: Creating root user entry\n");
-  fflush(stdout);
   root.uid = 0;
   root.gid = 0;
   strncpy(root.username, "root", MAX_USERNAME - 1);
@@ -61,27 +55,17 @@ void init_user_table(void) {
   strncpy(root.shell, "/bin/sh", 127);
   root.shell[127] = '\0';
   
-  printf("DEBUG: Adding root to user table\n");
-  fflush(stdout);
   users.users[0] = root;
   
   // Initialize root shadow
   struct shadow_entry root_shadow;
-  printf("DEBUG: Creating root shadow entry\n");
-  fflush(stdout);
   root_shadow.uid = 0;
   strncpy(root_shadow.username, "root", MAX_USERNAME - 1);
   root_shadow.username[MAX_USERNAME - 1] = '\0';
-  printf("DEBUG: Hashing root password\n");
-  fflush(stdout);
   hash_password("root", root_shadow.password_hash);
   
-  printf("DEBUG: Adding root shadow to table\n");
-  fflush(stdout);
   users.shadows[0] = root_shadow;
   users.num_users = 1;
-  printf("DEBUG: init_user_table complete\n");
-  fflush(stdout);
 }
 
 int authenticate_user(char *username, char *password, uid_t *uid, gid_t *gid) {
